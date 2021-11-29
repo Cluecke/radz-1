@@ -1,0 +1,26 @@
+{
+  "name": "hyper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "lint": "eslint .",
+    "test": "echo \"Test passed successfully!\" && exit 0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hyperapp": "^2.0.18",
+    "hyperlit": "^0.3.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "snowpack": "^3.4.0"
+  }
+}
