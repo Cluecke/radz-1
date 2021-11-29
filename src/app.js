@@ -168,57 +168,53 @@ const View = (state) => html`
     <p>This is a prototype. Handle with care. Made by Gordic 5olutions</p>
   </header>
   <main>
+  
+
     <section>
-      ${NetworkView(state)}
+      <h1>Befundung</h1>
     </section>
 
     <section>
-      ${(state.network === NETWORK_ONLINE)
-        ? html`
-          <input type="text" oninput=${UpdateOpenFeedNameAction} value=${state.openFeedName} autofocus/>${' '}
-          <button onclick=${OpenFeedAction}>Open</button>
-        `
-        : ''
-      }
+      <p>
+        <label for="select">Untersuchtungstyp</label>
+          <select id="select">
+            <optgroup label="Untersuchtungstyp">
+              <option>
+                Perfusion
+              </option>
+              <option>
+                Myokarditis
+              </option>
+              <option>
+              Vitalität
+              </option>
+              <option>
+              Kardiomyopathie
+              </option>
+              <option>
+                Fallot
+              </option>
+              <option>
+                Aorta
+              </option>
+              <option>
+                Ista
+              </option>
+              <option>
+                Tumor
+              </option>
+              <option>
+                Diastolische Dysfunktion
+              </option>
+            </optgroup>
+          </select>
+        </p>
     </section>
-    <section>
-      ${state.editFeed
-      ? html`
-        <h3>${state.editFeedName}</h3>
-        <table>
-        ${state.posts.map(p => html`
-          <tr>
-          <td>
-            <svg width="40" height="40" data-jdenticon-value="${p.identity.id}"></svg>
-          </td>
-          <td>
-            ${PostValueView(p.payload.value.post)}
-          </td>
-          </tr>
-        `)}
-        </table>
-        <input type="text" oninput=${UpdateAddPostTextAction} value=${state.addPostText} autofocus/>${' '}
-        <button onclick=${AddPostAction}>Add</button> 
-        <input type="file" id="fileElem" onchange=${AddFileAction} accept="image/*" />${' '}
-       
-      `
-      : ''}
-
-    </section>
-    ${state.network === NETWORK_ONLINE
-    ? html`
-      <section>
-        <h3>Peers</h3>
-        ${state.peers.map(p => html`
-    <p>${p.addr ? p.addr.toString() : ''} <br/> ${p.peer ? p.peer.toString() : ''}</p>
-        `)
-        }
-      </section>
-      `
-    : ''}
+ 
 
   </main>
   <footer>
+   copyright by gordic5.com
    </footer>
 </body>
 `

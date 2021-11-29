@@ -16,13 +16,13 @@
     </script-->
   <script src="lib/jdenticon-3.0.1/jdenticon.min.js"></script>
   <script>
-    console.log('Polizei calling getUserMedia first')
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(
-      stream => {
-        console.log('Polizei Stopping MediaStreamTracks')
-        stream.getTracks().forEach(track => track.stop())
-      }
-    )
+    // console.log('Polizei calling getUserMedia first')
+    // navigator.mediaDevices.getUserMedia({ audio: true }).then(
+    //   stream => {
+    //     console.log('Polizei Stopping MediaStreamTracks')
+    //     stream.getTracks().forEach(track => track.stop())
+    //   }
+    // )
   </script>
   <script src="src/app.js" type="module"></script>
 </head>
