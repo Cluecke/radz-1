@@ -42,7 +42,7 @@ const NetworkOnlineAction = (state) => ({
 const NetworkView = (state) => {
   switch (state.network) {
     case NETWORK_OFFLINE: return html`
-      <p>You should start a network node.</p>  
+      <p>You should start a network node.</p>
       <button onclick=${NetworkConnectAction}>Go online</button>
     `
     case NETWORK_CONNECTING: return html`
@@ -89,7 +89,7 @@ const UpdateAddPostTextAction = (state, event) => {
 const AddPostAction = (state) => [{
   ...state,
   addPostText: ''
-//  posts: [...state.posts, state.addPostText]
+  //  posts: [...state.posts, state.addPostText]
 }, [AddPostEffect, {
   db: state.editFeedName,
   post: state.addPostText
@@ -133,10 +133,10 @@ const LoadPostsAction = (state) => [
 ]
 
 const SetPeersAction = (state, peers) =>
-  ({
-    ...state,
-    peers: peers
-  })
+({
+  ...state,
+  peers: peers
+})
 
 const IpfsSwarmListen = data => [
   IpfsSwarmSubscription, data
@@ -155,7 +155,7 @@ const PostValueView = (post) => {
   const isPng = /^data:image\//
 
   if (isPng.test(post)) {
-    return html`<img src=${post}/>`
+    return html`<img src=${post} />`
   }
 
   // fallback
@@ -168,54 +168,82 @@ const View = (state) => html`
     <p>This is a prototype. Handle with care. Made by Gordic 5olutions</p>
   </header>
   <main>
-  
+
 
     <section>
       <h1>Befundung</h1>
+
+      <label for="input_groess">Größe</label>
+      <input id="input_groesse" type="number" value="180" />
+
+      <label for="input_gewicht">Gewicht</label>
+      <input id="input_gewicht" type="number" value="90" />
+
+      <label for="input_geschlecht">Geschlecht</label>
+      <select id="input_geschlecht">
+        <optgroup label="Untersuchtungstyp">
+          <option>
+            männlich
+          </option>
+          <option>
+            weiblich
+          </option>
+        </optgroup>
+      </select>
+
+      <label for="input_edv">EDV</label>
+      <input id="input_edv" type="number" value="213" />
+      <label for="input_esv">Gewicht</label>
+      <input id="input_esv" type="number" value="153" />
+      <label for="input_wandmasse">Wandmasse</label>
+      <input id="input_wandmasse" type="number" value="0" />
+
+
     </section>
+
 
     <section>
       <p>
         <label for="select">Untersuchtungstyp</label>
-          <select id="select">
-            <optgroup label="Untersuchtungstyp">
-              <option>
-                Perfusion
-              </option>
-              <option>
-                Myokarditis
-              </option>
-              <option>
+        <select id="select">
+          <optgroup label="Untersuchtungstyp">
+            <option>
+              Perfusion
+            </option>
+            <option>
+              Myokarditis
+            </option>
+            <option>
               Vitalität
-              </option>
-              <option>
+            </option>
+            <option>
               Kardiomyopathie
-              </option>
-              <option>
-                Fallot
-              </option>
-              <option>
-                Aorta
-              </option>
-              <option>
-                Ista
-              </option>
-              <option>
-                Tumor
-              </option>
-              <option>
-                Diastolische Dysfunktion
-              </option>
-            </optgroup>
-          </select>
-        </p>
+            </option>
+            <option>
+              Fallot
+            </option>
+            <option>
+              Aorta
+            </option>
+            <option>
+              Ista
+            </option>
+            <option>
+              Tumor
+            </option>
+            <option>
+              Diastolische Dysfunktion
+            </option>
+          </optgroup>
+        </select>
+      </p>
     </section>
- 
+
 
   </main>
   <footer>
-   copyright by gordic5.com
-   </footer>
+    copyright by gordic5.com
+  </footer>
 </body>
 `
 
