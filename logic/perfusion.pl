@@ -25,5 +25,6 @@ render :-
 	report_esv(ESV, ESV_Text),
     create(p, P),
     html(P, ESV_Text),
+    attr(P, 'id', 'render-result'),
     get_by_id('ausgabe', Parent),
     append_child(Parent, P).

@@ -164,12 +164,19 @@ const PostValueView = (post) => {
 
 
 const RenderEffect = (dispatch, data) => {
-  alert(`rendering report`)
+  // alert(`rendering report`)
 
   let session = pl.create()
   session.consult('logic/perfusion.pl', {
     success: () => {
       console.log('success parsing')
+
+      // dirty, sorry
+      let old = document.getElementById('render-result')
+      if (old) {
+        old.parentElement.removeChild(old)
+      }
+
       session.query('render.', {
         success: (goal) => {
           console.log('success querying')
@@ -178,7 +185,7 @@ const RenderEffect = (dispatch, data) => {
             success: function (answer) {
               console.log('success answering')
 
-              alert(answer)
+              //alert(answer)
             },
             fail: function () { console.log('none found') },
             limit: function () { console.log('limit exceeded') },
@@ -213,83 +220,86 @@ const View = (state) => html`
   </header>
   <main>
 
+    <div class="myrow">
 
-    <section>
-      <h1>Befundung</h1>
+      <section class="mycolumn">
+        <h1>Befundung</h1>
 
-      <label for="input_groess">Größe</label>
-      <input id="input_groesse" type="number" value="180" />
+        <label for="input_groess">Größe</label>
+        <input id="input_groesse" type="number" value="180" />
 
-      <label for="input_gewicht">Gewicht</label>
-      <input id="input_gewicht" type="number" value="90" />
+        <label for="input_gewicht">Gewicht</label>
+        <input id="input_gewicht" type="number" value="90" />
 
-      <label for="input_geschlecht">Geschlecht</label>
-      <select id="input_geschlecht">
-        <optgroup label="Untersuchtungstyp">
-          <option>
-            männlich
-          </option>
-          <option>
-            weiblich
-          </option>
-        </optgroup>
-      </select>
-
-      <label for="input_edv">EDV</label>
-      <input id="input_edv" type="number" value="213" />
-      <label for="input_esv">Gewicht</label>
-      <input id="input_esv" type="number" value="153" />
-      <label for="input_wandmasse">Wandmasse</label>
-      <input id="input_wandmasse" type="number" value="0" />
-
-    </section>
-
-
-    <section>
-      <h1>Ausgabe</h1>
-      <p>
-        <label for="select">Untersuchtungstyp</label>
-        <select id="select">
+        <label for="input_geschlecht">Geschlecht</label>
+        <select id="input_geschlecht">
           <optgroup label="Untersuchtungstyp">
             <option>
-              Perfusion
+              männlich
             </option>
             <option>
-              Myokarditis
-            </option>
-            <option>
-              Vitalität
-            </option>
-            <option>
-              Kardiomyopathie
-            </option>
-            <option>
-              Fallot
-            </option>
-            <option>
-              Aorta
-            </option>
-            <option>
-              Ista
-            </option>
-            <option>
-              Tumor
-            </option>
-            <option>
-              Diastolische Dysfunktion
+              weiblich
             </option>
           </optgroup>
         </select>
 
+        <label for="input_edv">EDV</label>
+        <input id="input_edv" type="number" value="213" />
+        <label for="input_esv">ESV</label>
+        <input id="input_esv" type="number" value="153" />
+        <label for="input_wandmasse">Wandmasse</label>
+        <input id="input_wandmasse" type="number" value="0" />
 
-        <div>
-          <button id="render" type="button" onclick=${RenderAction}>Render</button>
-        </div>
-      </p>
+      </section>
 
-      <div id="ausgabe"></div>
-    </section>
 
+
+
+      <section class="mycolumn">
+        <h1>Ausgabe</h1>
+        <p>
+          <label for="select">Untersuchtungstyp</label>
+          <select id="select">
+            <optgroup label="Untersuchtungstyp">
+              <option>
+                Perfusion
+              </option>
+              <option>
+                Myokarditis
+              </option>
+              <option>
+                Vitalität
+              </option>
+              <option>
+                Kardiomyopathie
+              </option>
+              <option>
+                Fallot
+              </option>
+              <option>
+                Aorta
+              </option>
+              <option>
+                Ista
+              </option>
+              <option>
+                Tumor
+              </option>
+              <option>
+                Diastolische Dysfunktion
+              </option>
+            </optgroup>
+          </select>
+
+
+          <div>
+            <button id="render" type="button" onclick=${RenderAction}>Render</button>
+          </div>
+        </p>
+
+        <div id="ausgabe"></div>
+      </section>
+    </div>
   </main>
   <footer>
     copyright by gordic5.com
@@ -318,6 +328,7 @@ app({
       editFeedName: '',
       posts: [],
       addPostText: ''
+
     }
 
     // inital effects
