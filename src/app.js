@@ -162,6 +162,50 @@ const PostValueView = (post) => {
   return html`<span>${post}</span>`
 }
 
+
+const RenderEffect = (dispatch, data) => {
+  alert(`rendering report`)
+
+  let session = pl.create()
+  session.consult('logic/perfusion.pl', {
+    success: () => {
+      console.log('success parsing')
+      session.query('render.', {
+        success: (goal) => {
+          console.log('success querying')
+
+          session.answer({
+            success: function (answer) {
+              console.log('success answering')
+
+              alert(answer)
+            },
+            fail: function () { console.log('none found') },
+            limit: function () { console.log('limit exceeded') },
+            error: function (err) { console.log(err) }
+          })
+        },
+        fail: function () { console.log('none found') },
+        limit: function () { console.log('limit exceeded') },
+        error: function (err) { console.log(err) }
+      })
+
+
+
+    },
+    error: (err) => alert(err)
+  })
+
+
+
+
+}
+
+const RenderAction = (state) => {
+  return [{ ...state }, [RenderEffect, {}]]
+}
+
+
 const View = (state) => html`
 <body>
   <header>
@@ -198,11 +242,11 @@ const View = (state) => html`
       <label for="input_wandmasse">Wandmasse</label>
       <input id="input_wandmasse" type="number" value="0" />
 
-
     </section>
 
 
     <section>
+      <h1>Ausgabe</h1>
       <p>
         <label for="select">Untersuchtungstyp</label>
         <select id="select">
@@ -236,9 +280,15 @@ const View = (state) => html`
             </option>
           </optgroup>
         </select>
-      </p>
-    </section>
 
+
+        <div>
+          <button id="render" type="button" onclick=${RenderAction}>Render</button>
+        </div>
+      </p>
+
+      <div id="ausgabe"></div>
+    </section>
 
   </main>
   <footer>
