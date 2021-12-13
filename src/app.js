@@ -4,6 +4,8 @@ import html from 'hyperlit'
 import { networkAddFilesEffect, networkConnectEffect, networkAuthenticateEffect } from './fx/network.js'
 import { OrbitListen, LoadPostsEffect } from './fx/orbit.js'
 
+import { PerfusionView } from './views/PerfusionView.js'
+
 // "network boot sequence"
 const NETWORK_OFFLINE = 'network_offline'
 const NETWORK_CONNECTING = 'network_connecting'
@@ -212,6 +214,35 @@ const RenderAction = (state) => {
   return [{ ...state }, [RenderEffect, {}]]
 }
 
+const UpdateGroesseAction = (state, event) => ({
+  ...state,
+  groesse: event.target.value
+})
+
+const UpdateGewichtAction = (state, event) => ({
+  ...state,
+  gewicht: event.target.value
+})
+
+const UpdateGeschlechtAction = (state, event) => ({
+  ...state,
+  geschlecht: event.target.value
+})
+
+const UpdateEDVAction = (state, event) => ({
+  ...state,
+  edv: event.target.value
+})
+
+const UpdateESVAction = (state, event) => ({
+  ...state,
+  esv: event.target.value
+})
+
+const UpdateWandmasseAction = (state, event) => ({
+  ...state,
+  wandmasse: event.target.value
+})
 
 const View = (state) => html`
 <body>
@@ -226,14 +257,14 @@ const View = (state) => html`
         <h1>Befundung</h1>
 
         <label for="input_groess">Größe</label>
-        <input id="input_groesse" type="number" value="180" />
+        <input id="input_groesse" type="number" value=${state.groesse} oninput=${UpdateGroesseAction} />
 
         <label for="input_gewicht">Gewicht</label>
-        <input id="input_gewicht" type="number" value="90" />
+        <input id="input_gewicht" type="number" value=${state.gewicht} oninput=${UpdateGewichtAction} />
 
         <label for="input_geschlecht">Geschlecht</label>
-        <select id="input_geschlecht">
-          <optgroup label="Untersuchtungstyp">
+        <select id="input_geschlecht" value=${state.geschlecht} oninput=${UpdateGeschlechtAction}>
+          <optgroup label="label_geschlecht">
             <option>
               männlich
             </option>
@@ -244,11 +275,12 @@ const View = (state) => html`
         </select>
 
         <label for="input_edv">EDV</label>
-        <input id="input_edv" type="number" value="213" />
+        <input id="input_edv" type="number" value=${state.edv} oninput=${UpdateEDVAction} />
+
         <label for="input_esv">ESV</label>
-        <input id="input_esv" type="number" value="153" />
+        <input id="input_esv" type="number" value=${state.esv} oninput=${UpdateESVAction} />
         <label for="input_wandmasse">Wandmasse</label>
-        <input id="input_wandmasse" type="number" value="0" />
+        <input id="input_wandmasse" type="number" value=${state.wandmasse} oninput=${UpdateWandmasseAction} />
 
       </section>
 
@@ -291,10 +323,7 @@ const View = (state) => html`
             </optgroup>
           </select>
 
-
-          <div>
-            <button id="render" type="button" onclick=${RenderAction}>Render</button>
-          </div>
+          ${PerfusionView(state)}
         </p>
 
         <div id="ausgabe"></div>
@@ -327,8 +356,15 @@ app({
       editFeed: false,
       editFeedName: '',
       posts: [],
-      addPostText: ''
+      addPostText: '',
 
+      // RADZ
+      groesse: 180,
+      gewicht: 90,
+      geschlecht: "männlich",
+      edv: 213,
+      esv: 153,
+      wandmasse: 0
     }
 
     // inital effects
