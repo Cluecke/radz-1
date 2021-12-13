@@ -2,29 +2,29 @@ import html from 'hyperlit'
 
 const PerfusionView = (state) => html`
 <p>
-    Patientenparameter aktuell:<br>
-    Körpergrösse: ${state.groesse} cm<br>
-    Körpergewicht: ${state.gewicht} kg<br>
-    Körperoberfläche: x,x qm<br>
+    Patientenparameter aktuell:
+    Körpergrösse: ${state.groesse} cm
+    Körpergewicht: ${state.gewicht} kg
+    Körperoberfläche: x,x qm
 </p>
 <p>
-    Untersuchung in folgenden Sequenzen<br>
-    Axiale SSh/T2/TSE,<br>
-    SSFP in SA, 4-CH, 2-CH<br>
-    Perfusion in SA mit jeweils 0,075 mmol/kgKG ml Gadovist i.v. in Stress (400 µg Regadenoson i.v.) und Ruhe.<br>
-    DE-Sequenzen nach insgesamt $(Körpergewicht * 0,15 Format: XX,X) ml Gadovist-Gabe i.v. in SA, 4-CH.<br>
+    Untersuchung in folgenden Sequenzen
+    Axiale SSh/T2/TSE,
+    SSFP in SA, 4-CH, 2-CH
+    Perfusion in SA mit jeweils 0,075 mmol/kgKG ml Gadovist i.v. in Stress (400 µg Regadenoson i.v.) und Ruhe.
+    DE-Sequenzen nach insgesamt ${state.gewicht * 0.15} (Format: XX,X) ml Gadovist-Gabe i.v. in SA, 4-CH.
 </p>
 
 <p>
-    Befund:<br>
-    Es liegt keine Voruntersuchung zum Vergleich vor.<br>
+    Befund:
+    Es liegt keine Voruntersuchung zum Vergleich vor.
     Morphologie: Links deszendierende Aorta mit regelrechtem Abgang der supraaortalen Gefäße. Aorta ascendens mit
     normalkalibrig. In den SSFP normal großer linker und rechter Ventrikel. Kein Perikarderguss, kein Pleuraerguss.
 </p>
 <p>
     CINE-MRT: Visuell gute linksventrikuläre Funktion. Keine regionalen Wandbewegungsstörungen in Ruhe oder unter
-    Belastung.<br>
-    Keine path. Dephasierungsartefakte über den AV-Klappen.<br>
+    Belastung.
+    Keine path. Dephasierungsartefakte über den AV-Klappen.
 </p>
 <p>
     LV Parameter nach Simpsons Scheibchen-Summationsmethode, Normwerte in Klammern, Volumina und Masse normiert auf die
