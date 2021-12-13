@@ -12,7 +12,7 @@ const PerfusionView = (state) => html`
     Axiale SSh/T2/TSE,
     SSFP in SA, 4-CH, 2-CH
     Perfusion in SA mit jeweils 0,075 mmol/kgKG ml Gadovist i.v. in Stress (400 µg Regadenoson i.v.) und Ruhe.
-    DE-Sequenzen nach insgesamt ${state.gewicht * 0.15} (Format: XX,X) ml Gadovist-Gabe i.v. in SA, 4-CH.
+    DE-Sequenzen nach insgesamt ${Math.round(state.gewicht * 1.5)/10} (Format: XX,X) ml Gadovist-Gabe i.v. in SA, 4-CH.
 </p>
 
 <p>
