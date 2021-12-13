@@ -2,10 +2,10 @@ import html from 'hyperlit'
 
 const PerfusionView = (state) => html`
 <p>
-    Patientenparameter aktuell:
-    Körpergrösse: ${state.groesse} cm
-    Körpergewicht: ${state.gewicht} kg
-    Körperoberfläche: x,x qm
+    Patientenparameter aktuell: <br />
+    Körpergrösse: ${state.groesse} cm <br />
+    Körpergewicht: ${state.gewicht} kg <br />
+    Körperoberfläche: x,x qm <br />
 </p>
 <p>
     Untersuchung in folgenden Sequenzen
