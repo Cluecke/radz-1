@@ -8,17 +8,17 @@ const PerfusionView = (state) => html`
     Körperoberfläche: x,x qm <br />
 </p>
 <p>
-    Untersuchung in folgenden Sequenzen
+    Untersuchung in folgenden Sequenzen: <br />
     Axiale SSh/T2/TSE,
-    SSFP in SA, 4-CH, 2-CH
+    SSFP in 2-KB, 4 KB, SA
     Perfusion in SA mit jeweils 0,075 mmol/kgKG ml Gadovist i.v. in Stress (400 µg Regadenoson i.v.) und Ruhe.
-    DE-Sequenzen nach insgesamt ${Math.round(state.gewicht * 1.5)/10} (Format: XX,X) ml Gadovist-Gabe i.v. in SA, 4-CH.
+    DE-Sequenzen nach insgesamt ${Math.round(state.gewicht * 1.5)/10} ml Gadovist-Gabe i.v. in 2KB, 4 KB und SA.
 </p>
 
 <p>
     Befund:
-    Es liegt keine Voruntersuchung zum Vergleich vor.
-    Morphologie: Links deszendierende Aorta mit regelrechtem Abgang der supraaortalen Gefäße. Aorta ascendens mit
+    Es liegen keine Voruntersuchungen zum Vergleich vor. <br />
+    Morphologie: Links deszendierende Aorta mit regelrechtem Abgang der supraaortalen Gefäße. Aorta ascendens mit 
     normalkalibrig. In den SSFP normal großer linker und rechter Ventrikel. Kein Perikarderguss, kein Pleuraerguss.
 </p>
 <p>
@@ -33,7 +33,7 @@ const PerfusionView = (state) => html`
     g/m²
     (36 - 73 g/m²)¹;
     LV-Absolutwerte:
-    $EDV 120 ml (109 - 232 ml)¹; $ESV 60 ml (39 - 103 ml)¹; $SV 60 ml (58 - 140 ml)¹; $LV Masse 60 g (64 - 148 g)¹;
+    EDV: ${state.edv} ml (109 - 232 ml)¹; ESV: ${state.esv} (39 - 103 ml)¹; SV: ${state.edv-state.esv} ml (58 - 140 ml)¹; LV-Masse: ${state.wandmasse} g (64 - 148 g)¹;
 
     Petersen et al. 2017; // hier sollten später die Normwerte anpassbar sein, initiale Auswahl mit erinnerbarem
     Standard
