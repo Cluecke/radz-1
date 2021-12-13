@@ -24,7 +24,22 @@
     //   }
     // )
   </script>
+  <script src="lib/tau-prolog.js"></script>
   <script src="src/app.js" type="module"></script>
+
+  <style>
+    .mycolumn {
+      float: left;
+      width: 50%;
+    }
+
+    /* Clear floats after the columns */
+    .myrow:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
 </head>
 
 <body id="app">

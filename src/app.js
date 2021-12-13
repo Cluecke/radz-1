@@ -4,6 +4,8 @@ import html from 'hyperlit'
 import { networkAddFilesEffect, networkConnectEffect, networkAuthenticateEffect } from './fx/network.js'
 import { OrbitListen, LoadPostsEffect } from './fx/orbit.js'
 
+import { PerfusionView } from './views/PerfusionView.js'
+
 // "network boot sequence"
 const NETWORK_OFFLINE = 'network_offline'
 const NETWORK_CONNECTING = 'network_connecting'
@@ -42,7 +44,7 @@ const NetworkOnlineAction = (state) => ({
 const NetworkView = (state) => {
   switch (state.network) {
     case NETWORK_OFFLINE: return html`
-      <p>You should start a network node.</p>  
+      <p>You should start a network node.</p>
       <button onclick=${NetworkConnectAction}>Go online</button>
     `
     case NETWORK_CONNECTING: return html`
@@ -89,7 +91,7 @@ const UpdateAddPostTextAction = (state, event) => {
 const AddPostAction = (state) => [{
   ...state,
   addPostText: ''
-//  posts: [...state.posts, state.addPostText]
+  //  posts: [...state.posts, state.addPostText]
 }, [AddPostEffect, {
   db: state.editFeedName,
   post: state.addPostText
@@ -133,10 +135,10 @@ const LoadPostsAction = (state) => [
 ]
 
 const SetPeersAction = (state, peers) =>
-  ({
-    ...state,
-    peers: peers
-  })
+({
+  ...state,
+  peers: peers
+})
 
 const IpfsSwarmListen = data => [
   IpfsSwarmSubscription, data
@@ -155,12 +157,92 @@ const PostValueView = (post) => {
   const isPng = /^data:image\//
 
   if (isPng.test(post)) {
-    return html`<img src=${post}/>`
+    return html`<img src=${post} />`
   }
 
   // fallback
   return html`<span>${post}</span>`
 }
+
+
+const RenderEffect = (dispatch, data) => {
+  // alert(`rendering report`)
+
+  let session = pl.create()
+  session.consult('logic/perfusion.pl', {
+    success: () => {
+      console.log('success parsing')
+
+      // dirty, sorry
+      let old = document.getElementById('render-result')
+      if (old) {
+        old.parentElement.removeChild(old)
+      }
+
+      session.query('render.', {
+        success: (goal) => {
+          console.log('success querying')
+
+          session.answer({
+            success: function (answer) {
+              console.log('success answering')
+
+              //alert(answer)
+            },
+            fail: function () { console.log('none found') },
+            limit: function () { console.log('limit exceeded') },
+            error: function (err) { console.log(err) }
+          })
+        },
+        fail: function () { console.log('none found') },
+        limit: function () { console.log('limit exceeded') },
+        error: function (err) { console.log(err) }
+      })
+
+
+
+    },
+    error: (err) => alert(err)
+  })
+
+
+
+
+}
+
+const RenderAction = (state) => {
+  return [{ ...state }, [RenderEffect, {}]]
+}
+
+const UpdateGroesseAction = (state, event) => ({
+  ...state,
+  groesse: event.target.value
+})
+
+const UpdateGewichtAction = (state, event) => ({
+  ...state,
+  gewicht: event.target.value
+})
+
+const UpdateGeschlechtAction = (state, event) => ({
+  ...state,
+  geschlecht: event.target.value
+})
+
+const UpdateEDVAction = (state, event) => ({
+  ...state,
+  edv: event.target.value
+})
+
+const UpdateESVAction = (state, event) => ({
+  ...state,
+  esv: event.target.value
+})
+
+const UpdateWandmasseAction = (state, event) => ({
+  ...state,
+  wandmasse: event.target.value
+})
 
 const View = (state) => html`
 <body>
@@ -168,15 +250,47 @@ const View = (state) => html`
     <p>This is a prototype. Handle with care. Made by Gordic 5olutions</p>
   </header>
   <main>
-  
 
-    <section>
-      <h1>Befundung</h1>
-    </section>
+    <div class="myrow">
 
-    <section>
-      <p>
-        <label for="select">Untersuchtungstyp</label>
+      <section class="mycolumn">
+        <h1>Befundung</h1>
+
+        <label for="input_groess">Größe</label>
+        <input id="input_groesse" type="number" value=${state.groesse} oninput=${UpdateGroesseAction} />
+
+        <label for="input_gewicht">Gewicht</label>
+        <input id="input_gewicht" type="number" value=${state.gewicht} oninput=${UpdateGewichtAction} />
+
+        <label for="input_geschlecht">Geschlecht</label>
+        <select id="input_geschlecht" value=${state.geschlecht} oninput=${UpdateGeschlechtAction}>
+          <optgroup label="label_geschlecht">
+            <option>
+              männlich
+            </option>
+            <option>
+              weiblich
+            </option>
+          </optgroup>
+        </select>
+
+        <label for="input_edv">EDV</label>
+        <input id="input_edv" type="number" value=${state.edv} oninput=${UpdateEDVAction} />
+
+        <label for="input_esv">ESV</label>
+        <input id="input_esv" type="number" value=${state.esv} oninput=${UpdateESVAction} />
+        <label for="input_wandmasse">Wandmasse</label>
+        <input id="input_wandmasse" type="number" value=${state.wandmasse} oninput=${UpdateWandmasseAction} />
+
+      </section>
+
+
+
+
+      <section class="mycolumn">
+        <h1>Ausgabe</h1>
+        <p>
+          <label for="select">Untersuchtungstyp</label>
           <select id="select">
             <optgroup label="Untersuchtungstyp">
               <option>
@@ -186,10 +300,10 @@ const View = (state) => html`
                 Myokarditis
               </option>
               <option>
-              Vitalität
+                Vitalität
               </option>
               <option>
-              Kardiomyopathie
+                Kardiomyopathie
               </option>
               <option>
                 Fallot
@@ -208,14 +322,17 @@ const View = (state) => html`
               </option>
             </optgroup>
           </select>
-        </p>
-    </section>
- 
 
+          ${PerfusionView(state)}
+        </p>
+
+        <div id="ausgabe"></div>
+      </section>
+    </div>
   </main>
   <footer>
-   copyright by gordic5.com
-   </footer>
+    copyright by gordic5.com
+  </footer>
 </body>
 `
 
@@ -239,7 +356,15 @@ app({
       editFeed: false,
       editFeedName: '',
       posts: [],
-      addPostText: ''
+      addPostText: '',
+
+      // RADZ
+      groesse: 180,
+      gewicht: 90,
+      geschlecht: "männlich",
+      edv: 213,
+      esv: 153,
+      wandmasse: 0
     }
 
     // inital effects
